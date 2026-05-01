@@ -1,84 +1,869 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Haiii Selamat Pagi Ayang Aku</title>
-        <meta name="description" content="Semangat ya buat segala aktifitasnya" />
-        <meta name="author" content="Wafa Rifki Anafin" />
-        <link rel="stylesheet" type="text/css" href="css/uwu-primary.css" />
-        <link rel="stylesheet" type="text/css" href="css/uwu.css" />
-        <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this website in a modern browser that supports CSS Variables.");</script>
-    </head>
-    <body id="xixixi">
-        <main>
-            <svg class="hidden">
-                <symbol id="icon-soundon" viewBox="0 0 32 31">
-                    <title>Sound on</title>
-                    <path d="M6.405 9.239H0v13.128h6.405l12.474 8.316V.923L6.405 9.239zM5.75 20.491H1.875v-9.377h3.876v9.377zm11.252 6.687l-9.376-6.25v-10.25l9.376-6.25v22.75zm10.884-21.32c5.484 5.483 5.484 14.406 0 19.89l-1.326-1.326c4.753-4.752 4.753-12.486 0-17.239l1.326-1.326zm-2.652 2.651c4.021 4.022 4.021 10.566 0 14.587l-1.326-1.326c3.29-3.29 3.29-8.644 0-11.935l1.326-1.326zm-2.652 2.652a6.571 6.571 0 010 9.283l-1.327-1.326a4.694 4.694 0 000-6.63l1.327-1.327z"/>
-                </symbol>
-                <symbol id="icon-soundoff" viewBox="0 0 32 31">
-                    <title>Sound off</title>
-                    <path d="M6.409 9.11H0v13.135h6.409l12.48 8.32V.79L6.41 9.109zm-.655 11.258H1.876v-9.382h3.878v9.382zm11.26 6.691L7.63 20.804V10.55l9.382-6.255V27.06zM32 11.65l-1.327-1.326-4.027 4.027-4.028-4.027-1.327 1.326 4.028 4.028-4.028 4.028 1.327 1.327 4.027-4.028 4.028 4.028L32 19.705l-4.028-4.028L32 11.65z"/>
-                </symbol>
-            </svg>
-            <div class="frame">
-                <h1 class="frame__title"></h1>
-                <div class="frame__links">
-                </div>
-                <div class="frame__demos">
-                    <a href="#" class="frame__demo frame__demo--current"></a>
-                </div>
-                <button class="toggle toggle--on button" id="toggle-btn" style="display: none;">
-                    <svg class="toggle__icon toggle__icon--on">
-                        <use xlink:href="#icon-soundon"></use>
-                    </svg>
-                    <svg class="toggle__icon toggle__icon--off">
-                        <use xlink:href="#icon-soundoff"></use>
-                    </svg>
-                </button>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wanita Tercantik Qonitah Nailah Salsabila</title>
+    <meta name="description" content="Semangat ya buat segala aktifitasnya - AKBAAR untuk Qonitah" />
+    <meta name="author" content="AKBAAR" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+
+        :root {
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            --color-text: #e8eef9;
+            --color-bg: #0a0f1a;
+            --color-link: #7e9ac9;
+            --color-link-hover: #b8cef0;
+            --anim-time: 11s;
+            --anim-delay-first: 3s;
+            --anim-delay-second: calc(var(--anim-delay-first) + var(--anim-time));
+            --anim-time-total: calc(var(--anim-time) + var(--anim-delay-first)/3 + var(--anim-delay-second));
+            --color-title: #eef3fc;
+            --color-accent: #6c91c2;
+            --color-accent-soft: rgba(108, 145, 194, 0.15);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hidden {
+            position: absolute;
+            overflow: hidden;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+
+        .p5_loading {
+            background: var(--color-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+
+        .p5_loading__inner {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1.5px solid transparent;
+            border-top-color: var(--color-accent);
+            border-right-color: rgba(108, 145, 194, 0.3);
+            animation: loaderSpin 1s ease-in-out infinite;
+        }
+
+        @keyframes loaderSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-link);
+            outline: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover,
+        a:focus {
+            color: var(--color-link-hover);
+            outline: none;
+        }
+
+        .frame {
+            padding: 3rem 5vw;
+            text-align: center;
+            position: relative;
+            z-index: 1500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.78rem;
+            font-weight: 300;
+        }
+
+        .frame__title {
+            font-size: inherit;
+            margin: 0 0 1rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+        }
+
+        .frame__links {
+            display: inline;
+        }
+
+        .frame__links a:not(:last-child),
+        .frame__demos a:not(:last-child) {
+            margin-right: 1.5rem;
+        }
+
+        .frame__demos {
+            margin: 1rem 0;
+        }
+
+        .frame__demo--current,
+        .frame__demo--current:hover {
+            color: var(--color-text);
+        }
+
+        .button {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: none;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            color: var(--color-link);
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            transition: all 0.3s ease;
+        }
+
+        .button--box {
+            pointer-events: auto;
+            background: transparent;
+            color: var(--color-accent);
+            border: 1px solid var(--color-accent);
+            padding: 0.75rem 3rem;
+            font-family: 'Jost', inherit;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin: 2rem;
+            border-radius: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .button--box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--color-accent-soft);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .button--box:hover::before {
+            transform: scaleX(1);
+        }
+
+        .button--box:hover,
+        .button--box:focus {
+            color: var(--color-link-hover);
+            border-color: var(--color-link-hover);
+            box-shadow: 0 0 24px rgba(108, 145, 194, 0.2);
+        }
+
+        .toggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .toggle:hover {
+            background: rgba(108, 145, 194, 0.2);
+        }
+
+        .toggle__icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            fill: var(--color-accent);
+        }
+
+        .toggle__icon--off {
+            display: none;
+        }
+
+        .toggle--on .toggle__icon--on {
+            display: none;
+        }
+
+        .toggle--on .toggle__icon--off {
+            display: block;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem;
+            width: 100vw;
+            min-height: 100vh;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            cursor: default;
+            text-transform: uppercase;
+            pointer-events: auto;
+        }
+
+        .content__subtitle {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin: 0 0 1.2rem 0;
+            opacity: 0.9;
+        }
+
+        .content__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 0.08em;
+            margin: 0;
+            color: var(--color-title);
+            line-height: 1.2;
+            text-transform: none;
+            text-shadow: 0 0 60px rgba(108, 145, 194, 0.3);
+            text-align: center;
+        }
+
+        .content__credits {
+            margin: 2.5rem 0;
+            max-width: 38rem;
+            text-align: center;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 300;
+            line-height: 2;
+            color: rgba(232, 238, 249, 0.65);
+            letter-spacing: 0.04em;
+            text-transform: none;
+        }
+
+        .content__credits small {
+            color: var(--color-accent);
+            font-style: italic;
+        }
+
+        .content__credits a {
+            color: rgba(232, 238, 249, 0.4);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .content__credits a:hover {
+            color: var(--color-link-hover);
+        }
+
+        .content__credits::before {
+            content: '🤍';
+            display: block;
+            font-size: 1rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(108, 145, 194, 0.3);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-video:hover {
+            background: var(--color-accent);
+            transform: scale(1.1);
+        }
+
+        .video-button {
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--color-accent), #4a7aab);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 145, 194, 0.3);
+        }
+
+        .video-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 145, 194, 0.4);
+            background: linear-gradient(135deg, #7eacd4, #5a8ab8);
+        }
+
+        .video-button:active {
+            transform: translateY(0);
+        }
+
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: var(--color-bg);
+            z-index: 1600;
+        }
+
+        .screen--grid {
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: 100%;
+            justify-items: center;
+            align-items: center;
+        }
+
+        .screen--flex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            pointer-events: auto;
+        }
+
+        .start-anim .intro {
+            animation: fadeOut 1s var(--anim-time-total) linear forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        .intro__content {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5vw;
+            font-style: italic;
+            font-weight: 300;
+            grid-area: 1 / 1 / 2 / 2;
+            text-align: center;
+            pointer-events: none;
+            margin: 0;
+            opacity: 0;
+            color: var(--color-title);
+            letter-spacing: 0.05em;
+        }
+
+        .intro__content-line {
+            display: block;
+            margin: 0.8rem 0;
+        }
+
+        .intro__content-line--small {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-style: normal;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            opacity: 0.85;
+        }
+
+        .start-anim .intro__content {
+            animation: fadeInOut var(--anim-time) var(--anim-delay-first) linear forwards;
+        }
+
+        .start-anim .intro__content:nth-child(2) {
+            animation-delay: var(--anim-delay-second);
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-10px);
+                pointer-events: none;
+            }
+        }
+
+        .action__line {
+            margin: 1rem 0;
+            cursor: default;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--color-title);
+            letter-spacing: 0.05em;
+            text-transform: none;
+        }
+
+        .start-anim .action {
+            transition: opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(10, 15, 26, 0.6) 100%);
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        @media screen and (min-width: 53em) {
+            .frame {
+                position: absolute;
+                text-align: left;
+                top: 0;
+                left: 0;
+                width: 100%;
+                display: grid;
+                padding: 2.5rem 4rem;
+                grid-template-columns: auto 1fr auto auto auto;
+                align-content: space-between;
+                align-items: center;
+            }
+
+            .frame__title {
+                margin: 0 5rem 0 0;
+            }
+
+            .frame__demos {
+                margin: 0;
+            }
+
+            .frame__links {
+                padding: 0;
+            }
+
+            .frame a {
+                pointer-events: auto;
+            }
+
+            .toggle {
+                margin: 0 0 0 4rem;
+            }
+
+            .content {
+                min-height: 100vh;
+                justify-content: center;
+            }
+
+            .content__title {
+                font-size: 6vw;
+            }
+
+            .intro__content {
+                font-size: 3vw;
+            }
+        }
+    </style>
+    <script>document.documentElement.className = "js"; var supportsCssVars = function () { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e }; supportsCssVars() || alert("Please view this website in a modern browser that supports CSS Variables.");</script>
+</head>
+
+<body id="xixixi">
+    <main>
+        <svg class="hidden">
+            <symbol id="icon-soundon" viewBox="0 0 32 31">
+                <title>Sound on</title>
+                <path d="M6.405 9.239H0v13.128h6.405l12.474 8.316V.923L6.405 9.239zM5.75 20.491H1.875v-9.377h3.876v9.377zm11.252 6.687l-9.376-6.25v-10.25l9.376-6.25v22.75zm10.884-21.32c5.484 5.483 5.484 14.406 0 19.89l-1.326-1.326c4.753-4.752 4.753-12.486 0-17.239l1.326-1.326zm-2.652 2.651c4.021 4.022 4.021 10.566 0 14.587l-1.326-1.326c3.29-3.29 3.29-8.644 0-11.935l1.326-1.326zm-2.652 2.652a6.571 6.571 0 010 9.283l-1.327-1.326a4.694 4.694 0 000-6.63l1.327-1.327z" />
+            </symbol>
+            <symbol id="icon-soundoff" viewBox="0 0 32 31">
+                <title>Sound off</title>
+                <path d="M6.409 9.11H0v13.135h6.409l12.48 8.32V.79L6.41 9.109zm-.655 11.258H1.876v-9.382h3.878v9.382zm11.26 6.691L7.63 20.804V10.55l9.382-6.255V27.06zM32 11.65l-1.327-1.326-4.027 4.027-4.028-4.027-1.327 1.326 4.028 4.028-4.028 4.028 1.327 1.327 4.027-4.028 4.028 4.028L32 19.705l-4.028-4.028L32 11.65z" />
+            </symbol>
+        </svg>
+        <div class="frame">
+            <h1 class="frame__title">QC (QONITAH CANTIK)</h1>
+            <div class="frame__links"></div>
+            <div class="frame__demos">
+                <a href="#" class="frame__demo frame__demo--current"></a>
             </div>
-            <div class="content">
-                <br><br><br><br><br><br><br><br>
-                <h3 class="content__subtitle">Selamat Pagi Ayang</h3>
-                <h2 class="content__title">ANISA AULIA</h2>
-                <div class="content__credits"><small>Ada jarak yang terbentang karena rindu.</small> Ada cerita yang terbuat karena jarak.<small> Aku percaya banget,</small>cerita kamu dan cerita aku akan menjadi cerita kita saat kita bertemu nanti. <small>Tetap Semangat Yah Sayang menjalani segala aktifitasnya hari ini.</small> Aku Sayang Banget Sama Kamu <small>I LOVE YOU ANISA AULIA</small>
-                    <br /><br /><br /><a href="https://instagram.com/wafarifki_" rel="sponsored">Created by Wafa Rifki Anafin</a>
-                </div>
-            </div>
-            <div class="screen screen--grid intro">
-                <p class="intro__content">
-                    <span class="intro__content-line">Wafa Rifki Anafin</span>
-                    <span class="intro__content-line intro__content-line--small">Mempersembahkan</span>
-                </p>
-                <p class="intro__content">
-                    <span class="intro__content-line intro__content-line--small">Website Spesial Dibuat Limited Edition Untuk</span>
-                    <span class="intro__content-line">Anisa Aulia Tersayang</span>
-                </p>
-            </div>
-            <div class="screen screen--flex action">
-                <span class="action__line">Hai Ayangnya Aku</span>
-                <button id="play-btn" class="button button--box" onclick="openFullscreen();">Mulai Sekarang</button>
-            </div>
-        </main>
-        <div id="p5_loading" class="p5_loading">
-            <div class="p5_loading__inner"></div>
+            <button class="toggle toggle--on button" id="toggle-btn">
+                <svg class="toggle__icon toggle__icon--on">
+                    <use xlink:href="#icon-soundon"></use>
+                </svg>
+                <svg class="toggle__icon toggle__icon--off">
+                    <use xlink:href="#icon-soundoff"></use>
+                </svg>
+            </button>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
-        <script src="js/uwu.js"></script>
-        <script>
-            var uwu = document.getElementById("xixixi");
-            function openFullscreen() {
-                if (uwu.requestFullscreen) {
-                        uwu.requestFullscreen();
-                    } else if (uwu.webkitRequestFullscreen) { /* Safari */
-                        uwu.webkitRequestFullscreen();
-                    } else if (uwu.msRequestFullscreen) { /* IE11 */
-                        uwu.msRequestFullscreen();
+        <div class="content">
+            <h3 class="content__subtitle">Selamat pagi, Qonitah</h3>
+            <h2 class="content__title">QONITAH NAILAH SALSABILA</h2>
+            <div class="content__credits"> Kita jalanin aja semuanya pelan-pelan sambil nambah cerita. Siapa tau nanti pas ketemu, ceritanya jadi lebih seru.
+
+Semangat ya buat hari ini. Jangan lupa makan, jangan males kuliah juga ya. Jaga diri baik-baik.
+
+Kalau ada apa-apa, cerita ke aku aja ya. Aku siap dengerin kok 🙂
+
+                <br /><br /><br />
+                <button id="showVideoBtn" class="video-button">🎬 Tonton Video Spesial 🎬</button>
+                <br /><br />
+                <a href="#" rel="sponsored">Dibuat oleh AKBAAAAAR YANG GABUT ❤️</a>
+            </div>
+        </div>
+
+        <div id="videoModal" class="video-modal">
+            <div class="video-container">
+                <button class="close-video" id="closeVideoBtn">×</button>
+                <video id="myVideo" controls>
+                    <source src="audio/video.mp4" type="video/mp4">
+                    Browser kamu tidak mendukung tag video.
+                </video>
+            </div>
+        </div>
+
+        <div class="screen screen--grid intro">
+            <p class="intro__content">
+                <span class="intro__content-line">AKBAAR</span>
+                <span class="intro__content-line intro__content-line--small">GABUUUT AJAA SIII 🤍</span>
+                <span class="intro__content-line intro__content-line--small">Semogaaaa sukaaa</span>
+            </p>
+            <p class="intro__content">
+                <span class="intro__content-line intro__content-line--small">Website Spesial Dibuat Untuk</span>
+                <span class="intro__content-line">Qonitah Nailah Salsabila</span>
+            </p>
+        </div>
+        <div class="screen screen--flex action">
+            <span class="action__line">Hai, Bociiiil ❤️</span>
+            <button id="play-btn" class="button button--box">Mulai Sekarang</button>
+        </div>
+    </main>
+    <div id="p5_loading" class="p5_loading">
+        <div class="p5_loading__inner"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
+    <script>
+        // ============ GLOBAL VARIABLES UNTUK AKSES AUDIO ============
+        let globalAudio = null;
+        let wasPlayingBeforeVideo = false;
+        
+        // Video Modal Functionality
+        const videoModal = document.getElementById('videoModal');
+        const showVideoBtn = document.getElementById('showVideoBtn');
+        const closeVideoBtn = document.getElementById('closeVideoBtn');
+        const myVideo = document.getElementById('myVideo');
+
+        if (showVideoBtn) {
+            showVideoBtn.addEventListener('click', function() {
+                // CEK APAKAH MUSIK SEDANG BERMAIN
+                if (globalAudio && globalAudio.isPlaying()) {
+                    wasPlayingBeforeVideo = true;
+                    globalAudio.pause();
+                    console.log("🎵 Musik dimute karena video diputar");
+                    
+                    // Ubah icon toggle ke mode mute (opsional)
+                    const toggleBtn = document.getElementById('toggle-btn');
+                    if (toggleBtn && !toggleBtn.classList.contains('toggle--on')) {
+                        toggleBtn.classList.add('toggle--on');
                     }
+                } else {
+                    wasPlayingBeforeVideo = false;
                 }
-        </script>
-    </body>
+                
+                videoModal.classList.add('active');
+                if (myVideo) myVideo.play();
+            });
+        }
+
+        function closeVideo() {
+            videoModal.classList.remove('active');
+            if (myVideo) {
+                myVideo.pause();
+                myVideo.currentTime = 0;
+            }
+            
+            // KEMBALIKAN MUSIK JIKA SEBELUMNYA SEDANG BERMAIN
+            if (wasPlayingBeforeVideo && globalAudio && !globalAudio.isPlaying()) {
+                globalAudio.loop();
+                globalAudio.setVolume(0.3);
+                console.log("🎵 Musik dilanjutkan kembali setelah video ditutup");
+                
+                // Kembalikan icon toggle (opsional)
+                const toggleBtn = document.getElementById('toggle-btn');
+                if (toggleBtn && toggleBtn.classList.contains('toggle--on')) {
+                    toggleBtn.classList.remove('toggle--on');
+                }
+            }
+        }
+
+        if (closeVideoBtn) closeVideoBtn.addEventListener('click', closeVideo);
+        if (videoModal) {
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) closeVideo();
+            });
+        }
+
+        // ============ P5.JS INSTANCE MODE ============
+        const s = (p) => {
+            let demo1Shader, img, fft, audio, toggleBtn
+            let playBtnElement
+
+            p.preload = () => {
+                // GANTI NAMA FILE MUSIK DI SINI!
+                // Contoh: 'audio/lagu.mp3' atau 'lagu.mp3'
+                audio = p.loadSound('audio/lagu.mp3',
+                    () => {
+                        console.log("✅ Musik berhasil dimuat!");
+                        globalAudio = audio; // SIMPAN KE GLOBAL
+                    },
+                    (err) => console.log("❌ Gagal load musik:", err)
+                )
+                
+                // Buat shader sederhana tanpa file eksternal
+                const vertShader = `
+                    attribute vec3 aPosition;
+                    attribute vec2 aTexCoord;
+                    varying vec2 vTexCoord;
+                    void main() {
+                        vTexCoord = aTexCoord;
+                        vec4 positionVec4 = vec4(aPosition, 1.0);
+                        positionVec4.xy = positionVec4.xy * 2.0;
+                        gl_Position = positionVec4;
+                    }
+                `
+                
+                const fragShader = `
+                    uniform vec2 u_resolution;
+                    uniform float u_time;
+                    uniform float u_bass;
+                    uniform float u_tremble;
+                    uniform float u_mid;
+                    uniform sampler2D u_texture;
+                    varying vec2 vTexCoord;
+                    
+                    void main() {
+                        vec2 uv = vTexCoord;
+                        float pulse = sin(u_time * 1.5) * 0.1 + 0.9;
+                        float waveX = sin(uv.y * 20.0 + u_time) * 0.05 * u_bass;
+                        float waveY = cos(uv.x * 15.0 + u_time * 1.2) * 0.03 * u_mid;
+                        uv.x += waveX;
+                        uv.y += waveY;
+                        
+                        vec4 color = texture2D(u_texture, uv);
+                        color.rgb += vec3(u_bass * 0.15, u_mid * 0.1, u_tremble * 0.05);
+                        color.rgb *= (0.7 + pulse * 0.5);
+                        
+                        gl_FragColor = color;
+                    }
+                `
+                
+                demo1Shader = p.createShader(vertShader, fragShader)
+                
+                // Buat gambar gradien cantik
+                let graphics = p.createGraphics(512, 512)
+                graphics.background(10, 15, 26)
+                
+                for (let i = 0; i < 200; i++) {
+                    graphics.stroke(108 + i % 50, 145 + i % 40, 194 - i % 30, 100)
+                    graphics.noFill()
+                    graphics.ellipse(256, 256, 300 - i, 300 - i)
+                }
+                
+                graphics.fill(108, 145, 194, 150)
+                graphics.noStroke()
+                graphics.textSize(180)
+                graphics.textAlign(p.CENTER, p.CENTER)
+                graphics.text('❤️', 256, 280)
+                graphics.textSize(40)
+                graphics.fill(255, 200, 200, 100)
+                graphics.text('🤍', 256, 220)
+                
+                img = graphics.get()
+            }
+
+            p.setup = () => {
+                playBtnElement = document.querySelector('#play-btn')
+                if (playBtnElement) {
+                    playBtnElement.addEventListener('click', () => {
+                        document.body.classList.add('start-anim')
+                        if (audio && !audio.isPlaying()) {
+                            audio.loop()
+                            audio.setVolume(0.3)
+                            console.log("🎵 Musik diputar!")
+                            globalAudio = audio;
+                        }
+                    })
+                }
+
+                p.pixelDensity(1)
+                p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
+
+                toggleBtn = document.querySelector('#toggle-btn')
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', () => {
+                        toggleBtn.classList.toggle('toggle--on')
+                        p.toggleAudio()
+                    })
+                }
+
+                fft = new p5.FFT()
+                p.shader(demo1Shader)
+
+                demo1Shader.setUniform('u_resolution', [p.windowWidth, p.windowHeight])
+                demo1Shader.setUniform('u_texture', img)
+                demo1Shader.setUniform('u_tResolution', [img.width, img.height])
+            }
+
+            p.draw = () => {
+                let bass = 0, treble = 0, mid = 0
+                
+                if (fft && audio && audio.isPlaying()) {
+                    fft.analyze()
+                    bass = fft.getEnergy("bass") / 255
+                    treble = fft.getEnergy("treble") / 255
+                    mid = fft.getEnergy("mid") / 255
+                }
+
+                const mapBass = p.map(bass, 0, 1, 0.2, 1.2)
+                const mapTreble = p.map(treble, 0, 1, 0, 0.3)
+                const mapMid = p.map(mid, 0, 1, 0, 0.5)
+
+                demo1Shader.setUniform('u_time', p.frameCount / 30)
+                demo1Shader.setUniform('u_bass', mapBass)
+                demo1Shader.setUniform('u_tremble', mapTreble)
+                demo1Shader.setUniform('u_mid', mapMid)
+
+                p.rect(0, 0, p.width, p.height)
+            }
+
+            p.windowResized = () => {
+                p.resizeCanvas(p.windowWidth, p.windowHeight)
+                demo1Shader.setUniform('u_resolution', [p.windowWidth, p.windowHeight])
+            }
+
+            p.toggleAudio = () => {
+                if (audio && audio.isPlaying()) {
+                    audio.pause()
+                    console.log("🔇 Musik dipause")
+                } else if (audio && !audio.isPlaying()) {
+                    audio.loop()
+                    audio.setVolume(0.3)
+                    console.log("🎵 Musik dilanjutkan")
+                }
+            }
+        }
+
+        new p5(s)
+        
+        // Hilangkan loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loading = document.getElementById('p5_loading');
+                if (loading) {
+                    loading.style.opacity = '0';
+                    setTimeout(function() { loading.style.display = 'none'; }, 500);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+
 </html>
