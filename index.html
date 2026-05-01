@@ -3,41 +3,46 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wanita Tercantik Qonitah Nailah Salsabila</title>
-    <meta name="description" content="Semangat ya buat segala aktifitasnya - AKBAAR untuk Qonitah" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Surat untuk Qonitah | Akbaar</title>
+    <meta name="description"
+        content="Sebuah surat digital spesial dengan animasi amplop untuk Qonitah Nailah Salsabila" />
     <meta name="author" content="AKBAAR" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-        *,
-        *::after,
-        *::before {
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         :root {
             font-size: 14px;
-        }
-
-        body {
-            margin: 0;
             --color-text: #e8eef9;
             --color-bg: #0a0f1a;
             --color-link: #7e9ac9;
             --color-link-hover: #b8cef0;
-            --anim-time: 11s;
-            --anim-delay-first: 3s;
-            --anim-delay-second: calc(var(--anim-delay-first) + var(--anim-time));
-            --anim-time-total: calc(var(--anim-time) + var(--anim-delay-first)/3 + var(--anim-delay-second));
+            --anim-time-1: 5s;
+            --anim-time-2: 5s;
+            --anim-delay-first: 1s;
+            --anim-delay-second: calc(var(--anim-delay-first) + var(--anim-time-1) + 0.5s);
+            --anim-time-total: calc(var(--anim-time-1) + var(--anim-time-2) + var(--anim-delay-first) + 1s);
             --color-title: #eef3fc;
             --color-accent: #6c91c2;
             --color-accent-soft: rgba(108, 145, 194, 0.15);
+            --pink-soft: #d4a5b0;
+        }
+
+        body {
+            margin: 0;
             color: var(--color-text);
             background-color: var(--color-bg);
             font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
             font-weight: 300;
             letter-spacing: 0.04em;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         canvas {
@@ -90,66 +95,199 @@
         a {
             text-decoration: none;
             color: var(--color-link);
-            outline: none;
             transition: color 0.3s ease;
         }
 
-        a:hover,
-        a:focus {
+        a:hover {
             color: var(--color-link-hover);
-            outline: none;
         }
 
+        /* Frame - dihide untuk mobile agar lebih rapi, tapi tetap ada strukturnya */
         .frame {
-            padding: 3rem 5vw;
-            text-align: center;
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
             z-index: 1500;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            font-size: 0.78rem;
-            font-weight: 300;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
         }
 
         .frame__title {
-            font-size: inherit;
-            margin: 0 0 1rem;
+            font-size: 0.7rem;
             font-weight: 300;
             letter-spacing: 0.2em;
             color: var(--color-accent);
+            text-transform: uppercase;
+            pointer-events: none;
         }
 
-        .frame__links {
-            display: inline;
+        /* Sembunyikan tombol toggle audio */
+        .toggle {
+            display: none;
         }
 
-        .frame__links a:not(:last-child),
-        .frame__demos a:not(:last-child) {
-            margin-right: 1.5rem;
+        /* INTRO SCREENS */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1600;
         }
 
-        .frame__demos {
-            margin: 1rem 0;
+        .screen--grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg);
         }
 
-        .frame__demo--current,
-        .frame__demo--current:hover {
-            color: var(--color-text);
+        .screen--flex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            pointer-events: auto;
+            background: var(--color-bg);
         }
 
-        .button {
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: none;
-            border: 0;
-            padding: 0;
-            margin: 0;
-            color: var(--color-link);
-            cursor: pointer;
-            font-family: 'Jost', sans-serif;
+        .start-anim .intro {
+            animation: fadeOutIntro 0.8s var(--anim-time-total) forwards;
+        }
+
+        @keyframes fadeOutIntro {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+
+        .intro__content {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 8vw;
+            font-style: italic;
             font-weight: 300;
-            letter-spacing: 0.12em;
-            transition: all 0.3s ease;
+            text-align: center;
+            margin: 0;
+            opacity: 0;
+            color: var(--color-title);
+            letter-spacing: 0.05em;
+            position: absolute;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 768px) {
+            .intro__content {
+                font-size: 3vw;
+            }
+        }
+
+        .intro__content-line {
+            display: block;
+            margin: 0.8rem 0;
+        }
+
+        .intro__content-line--small {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            opacity: 0.85;
+        }
+
+        @media (min-width: 768px) {
+            .intro__content-line--small {
+                font-size: 0.85rem;
+            }
+        }
+
+        .start-anim .intro__content:first-child {
+            animation: fadeInOutIntro1 var(--anim-time-1) var(--anim-delay-first) forwards;
+        }
+
+        .start-anim .intro__content:last-child {
+            animation: fadeInOutIntro2 var(--anim-time-2) var(--anim-delay-second) forwards;
+        }
+
+        @keyframes fadeInOutIntro1 {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-15px);
+                visibility: hidden;
+            }
+        }
+
+        @keyframes fadeInOutIntro2 {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-15px);
+                visibility: hidden;
+            }
+        }
+
+        .action__line {
+            margin: 1rem 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            font-weight: 300;
+            color: var(--color-title);
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .action__line {
+                font-size: 1.8rem;
+            }
+        }
+
+        .start-anim .action {
+            transition: opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .button--box {
@@ -157,150 +295,429 @@
             background: transparent;
             color: var(--color-accent);
             border: 1px solid var(--color-accent);
-            padding: 0.75rem 3rem;
-            font-family: 'Jost', inherit;
-            font-size: 0.8rem;
+            padding: 0.7rem 2rem;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            margin: 2rem;
             border-radius: 2rem;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
             transition: all 0.4s ease;
         }
 
-        .button--box::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--color-accent-soft);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        @media (min-width: 768px) {
+            .button--box {
+                padding: 0.75rem 3rem;
+                font-size: 0.8rem;
+            }
         }
 
-        .button--box:hover::before {
-            transform: scaleX(1);
-        }
-
-        .button--box:hover,
-        .button--box:focus {
+        .button--box:hover {
             color: var(--color-link-hover);
             border-color: var(--color-link-hover);
             box-shadow: 0 0 24px rgba(108, 145, 194, 0.2);
         }
 
-        .toggle {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
+        /* AMPLOP DESIGN */
+        .envelope-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 15, 26, 0.98) 0%, rgba(20, 25, 45, 0.96) 100%);
+            backdrop-filter: blur(12px);
+            z-index: 1800;
             display: flex;
-            align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.5s ease;
+            pointer-events: none;
         }
 
-        .toggle:hover {
-            background: rgba(108, 145, 194, 0.2);
+        .envelope-screen.active {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .toggle__icon {
-            width: 1.4rem;
-            height: 1.4rem;
-            fill: var(--color-accent);
-        }
-
-        .toggle__icon--off {
-            display: none;
-        }
-
-        .toggle--on .toggle__icon--on {
-            display: none;
-        }
-
-        .toggle--on .toggle__icon--off {
-            display: block;
-        }
-
-        .content {
+        .envelope-wrapper {
             display: flex;
             flex-direction: column;
-            padding: 0 1.5rem;
-            width: 100vw;
-            min-height: 100vh;
-            position: relative;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            max-width: 85vw;
+            height: 240px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .envelope-container {
+                width: 400px;
+                height: 280px;
+            }
+        }
+
+        .envelope-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #2a2e3f, #1e2230);
+            border-radius: 16px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(212, 165, 176, 0.3);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #383e58, #2c3048);
+            clip-path: polygon(0% 0%, 50% 48%, 100% 0%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+            z-index: 3;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(212, 165, 176, 0.4);
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 68%;
+            background: linear-gradient(145deg, #25293a, #1b1f2c);
+            border-radius: 0 0 16px 16px;
+        }
+
+        .stamp {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.65rem;
+            color: rgba(212, 165, 176, 0.7);
+            background: rgba(212, 165, 176, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 165, 176, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .stamp {
+                font-size: 0.75rem;
+                padding: 4px 10px;
+            }
+        }
+
+        .letter-inside {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            height: 0;
+            background: linear-gradient(145deg, #fefaf5, #f5efe5);
+            border-radius: 14px 14px 10px 10px;
+            transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
+            overflow: hidden;
+            text-align: center;
+            z-index: 2;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .envelope-container.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-container.open .letter-inside {
+            height: 210px;
+            bottom: 10px;
+            padding: 18px 12px;
+        }
+
+        @media (min-width: 768px) {
+            .envelope-container.open .letter-inside {
+                height: 240px;
+                padding: 20px 16px;
+            }
+        }
+
+        .letter-preview {
+            font-family: 'Cormorant Garamond', serif;
+            color: #3a3025;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.4s 0.45s;
+        }
+
+        .envelope-container.open .letter-preview {
+            opacity: 1;
+        }
+
+        .letter-preview p:first-child {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #8b5e6b;
+            border-bottom: 1px solid #e0cdb8;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .letter-preview p:first-child {
+                font-size: 1.2rem;
+            }
+        }
+
+        .btn-reveal-content {
+            background: linear-gradient(135deg, #6c91c2, #5a7cab);
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 400;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: 'Jost', sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        @media (min-width: 768px) {
+            .btn-reveal-content {
+                padding: 8px 26px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .envelope-hint {
+            margin-top: 20px;
+            text-align: center;
+            color: #8fa5cc;
+            background: rgba(10, 15, 26, 0.6);
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 165, 176, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .envelope-hint {
+                margin-top: 30px;
+                padding: 8px 24px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* KONTEN UTAMA - RATA TENGAH SEMPURNA */
+        .main-content {
+            position: relative;
             z-index: 100;
-            cursor: default;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 80px 16px 40px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            visibility: visible;
             pointer-events: auto;
+        }
+
+        .content-card {
+            background: rgba(20, 25, 40, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            width: 100%;
+            max-width: 550px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(108, 145, 194, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .content-card {
+                max-width: 650px;
+                padding: 2.5rem 2rem;
+                border-radius: 40px;
+            }
         }
 
         .content__subtitle {
             font-family: 'Jost', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 300;
-            letter-spacing: 0.35em;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: #8fa5cc;
+            margin-bottom: 0.8rem;
             text-transform: uppercase;
-            color: var(--color-accent);
-            margin: 0 0 1.2rem 0;
-            opacity: 0.9;
+        }
+
+        @media (min-width: 768px) {
+            .content__subtitle {
+                font-size: 0.75rem;
+                margin-bottom: 1rem;
+            }
         }
 
         .content__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 3.5rem;
-            font-weight: 300;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
             font-style: italic;
-            letter-spacing: 0.08em;
-            margin: 0;
-            color: var(--color-title);
-            line-height: 1.2;
-            text-transform: none;
-            text-shadow: 0 0 60px rgba(108, 145, 194, 0.3);
-            text-align: center;
+            color: #eef3fc;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+            word-break: keep-all;
         }
 
-        .content__credits {
-            margin: 2.5rem 0;
-            max-width: 38rem;
-            text-align: center;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 300;
-            line-height: 2;
-            color: rgba(232, 238, 249, 0.65);
-            letter-spacing: 0.04em;
-            text-transform: none;
+        @media (min-width: 768px) {
+            .content__title {
+                font-size: 2.5rem;
+            }
         }
 
-        .content__credits small {
-            color: var(--color-accent);
-            font-style: italic;
+        /* Elemen konten */
+        .hidden-content {
+            display: none;
+            animation: fadeInUp 0.5s ease forwards;
         }
 
-        .content__credits a {
-            color: rgba(232, 238, 249, 0.4);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .content__credits a:hover {
-            color: var(--color-link-hover);
-        }
-
-        .content__credits::before {
-            content: '🤍';
+        .hidden-content.show {
             display: block;
-            font-size: 1rem;
-            color: var(--color-accent);
-            margin-bottom: 1.5rem;
-            opacity: 0.7;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-message {
+            color: #c5d0e6;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 1.2rem 0;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .content-message {
+                font-size: 0.95rem;
+                margin: 1.5rem 0;
+            }
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #6c91c2, #5a7cab);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Jost', sans-serif;
+            transition: all 0.25s ease;
+            margin: 15px 0 8px;
+            letter-spacing: 1px;
+        }
+
+        @media (min-width: 768px) {
+            .next-btn {
+                padding: 12px 32px;
+                font-size: 0.9rem;
+                margin: 20px 0 10px;
+            }
+        }
+
+        .next-btn:hover {
+            background: linear-gradient(135deg, #7ea2d4, #6c8cbd);
+            transform: scale(1.02);
+        }
+
+        .progress-info {
+            color: #6c7a99;
+            font-size: 0.65rem;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        @media (min-width: 768px) {
+            .progress-info {
+                font-size: 0.7rem;
+            }
+        }
+
+        .video-button {
+            background: transparent;
+            border: 1px solid #6c91c2;
+            padding: 8px 24px;
+            border-radius: 40px;
+            color: #e8eef9;
+            font-weight: 400;
+            cursor: pointer;
+            margin: 12px 0;
+            transition: 0.2s;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .video-button {
+                padding: 10px 28px;
+                margin: 15px 0;
+                font-size: 0.85rem;
+            }
+        }
+
+        .footer-credit {
+            font-size: 0.65rem;
+            color: #6c7a99;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-credit {
+                font-size: 0.7rem;
+                margin-top: 20px;
+            }
         }
 
         .video-modal {
@@ -324,11 +741,17 @@
         .video-container {
             position: relative;
             width: 90%;
-            max-width: 800px;
+            max-width: 500px;
             background: #000;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(108, 145, 194, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .video-container {
+                max-width: 700px;
+                border-radius: 20px;
+            }
         }
 
         .video-container video {
@@ -339,530 +762,278 @@
 
         .close-video {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 24px;
+            width: 32px;
+            height: 32px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
             z-index: 10;
         }
 
-        .close-video:hover {
-            background: var(--color-accent);
-            transform: scale(1.1);
-        }
-
-        .video-button {
-            margin-top: 20px;
-            background: linear-gradient(135deg, var(--color-accent), #4a7aab);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-family: 'Jost', sans-serif;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(108, 145, 194, 0.3);
-        }
-
-        .video-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(108, 145, 194, 0.4);
-            background: linear-gradient(135deg, #7eacd4, #5a8ab8);
-        }
-
-        .video-button:active {
-            transform: translateY(0);
-        }
-
-        .screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: var(--color-bg);
-            z-index: 1600;
-        }
-
-        .screen--grid {
-            display: grid;
-            grid-template-columns: 100%;
-            grid-template-rows: 100%;
-            justify-items: center;
-            align-items: center;
-        }
-
-        .screen--flex {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            pointer-events: auto;
-        }
-
-        .start-anim .intro {
-            animation: fadeOut 1s var(--anim-time-total) linear forwards;
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                pointer-events: none;
-            }
-        }
-
-        .intro__content {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.5vw;
-            font-style: italic;
-            font-weight: 300;
-            grid-area: 1 / 1 / 2 / 2;
-            text-align: center;
-            pointer-events: none;
-            margin: 0;
-            opacity: 0;
-            color: var(--color-title);
-            letter-spacing: 0.05em;
-        }
-
-        .intro__content-line {
-            display: block;
-            margin: 0.8rem 0;
-        }
-
-        .intro__content-line--small {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.85rem;
-            font-style: normal;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            opacity: 0.85;
-        }
-
-        .start-anim .intro__content {
-            animation: fadeInOut var(--anim-time) var(--anim-delay-first) linear forwards;
-        }
-
-        .start-anim .intro__content:nth-child(2) {
-            animation-delay: var(--anim-delay-second);
-        }
-
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            15% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            85% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-10px);
-                pointer-events: none;
-            }
-        }
-
-        .action__line {
-            margin: 1rem 0;
-            cursor: default;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-style: italic;
-            font-weight: 300;
-            color: var(--color-title);
-            letter-spacing: 0.05em;
-            text-transform: none;
-        }
-
-        .start-anim .action {
-            transition: opacity 0.3s;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(ellipse at center, transparent 50%, rgba(10, 15, 26, 0.6) 100%);
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        @media screen and (min-width: 53em) {
-            .frame {
-                position: absolute;
-                text-align: left;
-                top: 0;
-                left: 0;
-                width: 100%;
-                display: grid;
-                padding: 2.5rem 4rem;
-                grid-template-columns: auto 1fr auto auto auto;
-                align-content: space-between;
-                align-items: center;
-            }
-
-            .frame__title {
-                margin: 0 5rem 0 0;
-            }
-
-            .frame__demos {
-                margin: 0;
-            }
-
-            .frame__links {
-                padding: 0;
-            }
-
-            .frame a {
-                pointer-events: auto;
-            }
-
-            .toggle {
-                margin: 0 0 0 4rem;
-            }
-
-            .content {
-                min-height: 100vh;
-                justify-content: center;
-            }
-
-            .content__title {
-                font-size: 6vw;
-            }
-
-            .intro__content {
-                font-size: 3vw;
+        @media (min-width: 768px) {
+            .close-video {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
             }
         }
     </style>
-    <script>document.documentElement.className = "js"; var supportsCssVars = function () { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e }; supportsCssVars() || alert("Please view this website in a modern browser that supports CSS Variables.");</script>
+    <script>document.documentElement.className = "js";</script>
 </head>
 
-<body id="xixixi">
-    <main>
-        <svg class="hidden">
-            <symbol id="icon-soundon" viewBox="0 0 32 31">
-                <title>Sound on</title>
-                <path d="M6.405 9.239H0v13.128h6.405l12.474 8.316V.923L6.405 9.239zM5.75 20.491H1.875v-9.377h3.876v9.377zm11.252 6.687l-9.376-6.25v-10.25l9.376-6.25v22.75zm10.884-21.32c5.484 5.483 5.484 14.406 0 19.89l-1.326-1.326c4.753-4.752 4.753-12.486 0-17.239l1.326-1.326zm-2.652 2.651c4.021 4.022 4.021 10.566 0 14.587l-1.326-1.326c3.29-3.29 3.29-8.644 0-11.935l1.326-1.326zm-2.652 2.652a6.571 6.571 0 010 9.283l-1.327-1.326a4.694 4.694 0 000-6.63l1.327-1.327z" />
-            </symbol>
-            <symbol id="icon-soundoff" viewBox="0 0 32 31">
-                <title>Sound off</title>
-                <path d="M6.409 9.11H0v13.135h6.409l12.48 8.32V.79L6.41 9.109zm-.655 11.258H1.876v-9.382h3.878v9.382zm11.26 6.691L7.63 20.804V10.55l9.382-6.255V27.06zM32 11.65l-1.327-1.326-4.027 4.027-4.028-4.027-1.327 1.326 4.028 4.028-4.028 4.028 1.327 1.327 4.027-4.028 4.028 4.028L32 19.705l-4.028-4.028L32 11.65z" />
-            </symbol>
-        </svg>
-        <div class="frame">
-            <h1 class="frame__title">QC (QONITAH CANTIK)</h1>
-            <div class="frame__links"></div>
-            <div class="frame__demos">
-                <a href="#" class="frame__demo frame__demo--current"></a>
+<body>
+
+    <div class="frame">
+        <h1 class="frame__title">QC QONITAH CANTIK</h1>
+        <button class="toggle toggle--on button" id="toggle-btn" style="display:none;"></button>
+    </div>
+
+    <!-- INTRO ANIMASI -->
+    <div class="screen screen--grid intro">
+        <p class="intro__content">
+            <span class="intro__content-line">AKBAAR</span>
+            <span class="intro__content-line intro__content-line--small">GABUUUT AJAA SIII 🤍</span>
+            <span class="intro__content-line intro__content-line--small">Semogaaaa sukaaa</span>
+        </p>
+        <p class="intro__content">
+            <span class="intro__content-line intro__content-line--small">✨ Website Spesial Dibuat Untuk ✨</span>
+            <span class="intro__content-line">Qonitah Nailah Salsabila</span>
+        </p>
+    </div>
+    <div class="screen screen--flex action">
+        <span class="action__line">Hai, Bociiiil ❤️</span>
+        <button id="play-btn" class="button--box">Mulai Sekarang</button>
+    </div>
+
+    <!-- LAYAR AMPLOP -->
+    <div id="envelopeScreen" class="envelope-screen">
+        <div class="envelope-wrapper">
+            <div id="envelopeContainer" class="envelope-container">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-body"></div>
+                    <div class="stamp">UNTUK BOCIL ❤️</div>
+                    <div class="letter-inside" id="letterInside">
+                        <div class="letter-preview">
+                            <p>AYOOOOOOO DONG DI BUKAA</p>
+                            <p style="font-size: 0.8rem;">Untuk seseorang yang istimewa</p>
+                            <button id="revealContentBtn" class="btn-reveal-content">Buka Surat</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="toggle toggle--on button" id="toggle-btn">
-                <svg class="toggle__icon toggle__icon--on">
-                    <use xlink:href="#icon-soundon"></use>
-                </svg>
-                <svg class="toggle__icon toggle__icon--off">
-                    <use xlink:href="#icon-soundoff"></use>
-                </svg>
-            </button>
+            <div class="envelope-hint">sentuh amplop untuk membuka</div>
         </div>
-        <div class="content">
-            <h3 class="content__subtitle">Selamat pagi, Qonitah</h3>
+    </div>
+
+    <!-- KONTEN UTAMA -->
+    <div id="mainContent" class="main-content">
+        <div class="content-card">
+            <div class="content__subtitle">Selamat pagi, Qonitah</div>
             <h2 class="content__title">QONITAH NAILAH SALSABILA</h2>
-            <div class="content__credits"> Kita jalanin aja semuanya pelan-pelan sambil nambah cerita. Siapa tau nanti pas ketemu, ceritanya jadi lebih seru.
-
-Semangat ya buat hari ini. Jangan lupa makan, jangan males kuliah juga ya. Jaga diri baik-baik.
-
-Kalau ada apa-apa, cerita ke aku aja ya. Aku siap dengerin kok 🙂
-
-                <br /><br /><br />
-                <button id="showVideoBtn" class="video-button">🎬 Tonton Video Spesial 🎬</button>
-                <br /><br />
-                <a href="#" rel="sponsored">Dibuat oleh AKBAAAAAR YANG GABUT ❤️</a>
-            </div>
+            <div id="stepContent"></div>
+            <button id="nextStepBtn" class="next-btn">Lanjutkan</button>
+            <div id="progressInfo" class="progress-info"></div>
         </div>
+    </div>
 
-        <div id="videoModal" class="video-modal">
-            <div class="video-container">
-                <button class="close-video" id="closeVideoBtn">×</button>
-                <video id="myVideo" controls>
-                    <source src="audio/video.mp4" type="video/mp4">
-                    Browser kamu tidak mendukung tag video.
-                </video>
-            </div>
+    <!-- MODAL VIDEO -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-container">
+            <button class="close-video" id="closeVideoBtn">×</button>
+            <video id="myVideo" controls>
+                <source src="audio/video.mp4" type="video/mp4">
+                Browser tidak support video.
+            </video>
         </div>
+    </div>
 
-        <div class="screen screen--grid intro">
-            <p class="intro__content">
-                <span class="intro__content-line">AKBAAR</span>
-                <span class="intro__content-line intro__content-line--small">GABUUUT AJAA SIII 🤍</span>
-                <span class="intro__content-line intro__content-line--small">Semogaaaa sukaaa</span>
-            </p>
-            <p class="intro__content">
-                <span class="intro__content-line intro__content-line--small">Website Spesial Dibuat Untuk</span>
-                <span class="intro__content-line">Qonitah Nailah Salsabila</span>
-            </p>
-        </div>
-        <div class="screen screen--flex action">
-            <span class="action__line">Hai, Bociiiil ❤️</span>
-            <button id="play-btn" class="button button--box">Mulai Sekarang</button>
-        </div>
-    </main>
     <div id="p5_loading" class="p5_loading">
         <div class="p5_loading__inner"></div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
     <script>
-        // ============ GLOBAL VARIABLES UNTUK AKSES AUDIO ============
         let globalAudio = null;
         let wasPlayingBeforeVideo = false;
-        
-        // Video Modal Functionality
+
+        const contents = [
+            { type: 'message', text: '👋 Hai, makasih ya udah buka ini. Aku bikin ini khusus buat kamu.' },
+            { type: 'message', text: '🙂 Semoga kamu suka ya. Cuma hal kecil sih, tapi aku pengen kamu tahu kalau kamu itu berarti.' },
+            { type: 'message', text: '💬 Kalau ada apa-apa, cerita aja ya. Aku ada kok, dengerin kamu.' },
+            { type: 'message', text: '📘 Semangat kuliahnya! Jangan terlalu dipaksain juga, istirahat tetep penting.' },
+            { type: 'message', text: '🍽️ Jangan lupa makan ya, apalagi sarapan. Tolong dijaga kesehatannya.' },
+            { type: 'message', text: '🎯 Kejar terus apa yang kamu mau. Aku bakal dukung kamu.' },
+            { type: 'message', text: '🌱 Kamu udah cukup dengan jadi diri kamu sendiri, gak perlu ngerasa kurang.' },
+            { type: 'video', text: 'Tonton video spesial ini ya', hasButton: true },
+            { type: 'footer', text: 'Dibuat oleh AKBAAAAAR YANG GABUT ❤️', isFooter: true }
+        ];
+
+        let currentStep = 0;
+        let contentRevealed = false;
+        let stepsContainer = null;
+        let nextBtn = null;
+        let progressSpan = null;
+
+        function showStep(step) {
+            if (!stepsContainer) return;
+            stepsContainer.innerHTML = '';
+
+            if (step >= contents.length) {
+                if (nextBtn) { nextBtn.disabled = true; nextBtn.style.opacity = '0.5'; }
+                if (progressSpan) progressSpan.textContent = 'Selesai! Terima kasih 💖';
+                return;
+            }
+
+            const content = contents[step];
+            const div = document.createElement('div');
+            div.className = 'hidden-content show';
+
+            if (content.type === 'message') {
+                div.innerHTML = `<div class="content-message">${content.text}</div>`;
+            } else if (content.type === 'video') {
+                div.innerHTML = `
+                    <div class="content-message" style="text-align: center;">
+                        <p>${content.text}</p>
+                        <button id="stepVideoBtn" class="video-button">🎬 Tonton Video Spesial 🎬</button>
+                    </div>
+                `;
+            } else if (content.type === 'footer') {
+                div.innerHTML = `<div class="footer-credit">${content.text}</div>`;
+            }
+
+            stepsContainer.appendChild(div);
+            if (progressSpan) progressSpan.textContent = `${step + 1} dari ${contents.length}`;
+
+            if (content.type === 'video') {
+                const videoBtn = document.getElementById('stepVideoBtn');
+                if (videoBtn) {
+                    videoBtn.addEventListener('click', function () {
+                        if (globalAudio && globalAudio.isPlaying()) {
+                            wasPlayingBeforeVideo = true;
+                            globalAudio.pause();
+                        } else wasPlayingBeforeVideo = false;
+                        videoModal.classList.add('active');
+                        if (myVideo) myVideo.play();
+                    });
+                }
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < contents.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            } else if (currentStep === contents.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
         const videoModal = document.getElementById('videoModal');
-        const showVideoBtn = document.getElementById('showVideoBtn');
         const closeVideoBtn = document.getElementById('closeVideoBtn');
         const myVideo = document.getElementById('myVideo');
 
-        if (showVideoBtn) {
-            showVideoBtn.addEventListener('click', function() {
-                // CEK APAKAH MUSIK SEDANG BERMAIN
-                if (globalAudio && globalAudio.isPlaying()) {
-                    wasPlayingBeforeVideo = true;
-                    globalAudio.pause();
-                    console.log("🎵 Musik dimute karena video diputar");
-                    
-                    // Ubah icon toggle ke mode mute (opsional)
-                    const toggleBtn = document.getElementById('toggle-btn');
-                    if (toggleBtn && !toggleBtn.classList.contains('toggle--on')) {
-                        toggleBtn.classList.add('toggle--on');
-                    }
-                } else {
-                    wasPlayingBeforeVideo = false;
-                }
-                
-                videoModal.classList.add('active');
-                if (myVideo) myVideo.play();
-            });
-        }
-
         function closeVideo() {
             videoModal.classList.remove('active');
-            if (myVideo) {
-                myVideo.pause();
-                myVideo.currentTime = 0;
-            }
-            
-            // KEMBALIKAN MUSIK JIKA SEBELUMNYA SEDANG BERMAIN
+            if (myVideo) { myVideo.pause(); myVideo.currentTime = 0; }
             if (wasPlayingBeforeVideo && globalAudio && !globalAudio.isPlaying()) {
                 globalAudio.loop();
                 globalAudio.setVolume(0.3);
-                console.log("🎵 Musik dilanjutkan kembali setelah video ditutup");
-                
-                // Kembalikan icon toggle (opsional)
-                const toggleBtn = document.getElementById('toggle-btn');
-                if (toggleBtn && toggleBtn.classList.contains('toggle--on')) {
-                    toggleBtn.classList.remove('toggle--on');
-                }
             }
         }
 
         if (closeVideoBtn) closeVideoBtn.addEventListener('click', closeVideo);
-        if (videoModal) {
-            videoModal.addEventListener('click', function(e) {
-                if (e.target === videoModal) closeVideo();
+        if (videoModal) videoModal.addEventListener('click', (e) => { if (e.target === videoModal) closeVideo(); });
+
+        const envelopeScreen = document.getElementById('envelopeScreen');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        const revealContentBtn = document.getElementById('revealContentBtn');
+        const mainContentDiv = document.getElementById('mainContent');
+        const playBtn = document.getElementById('play-btn');
+
+        let envelopeOpened = false;
+
+        if (playBtn) {
+            playBtn.addEventListener('click', () => {
+                document.body.classList.add('start-anim');
+                if (globalAudio && !globalAudio.isPlaying()) {
+                    globalAudio.loop();
+                    globalAudio.setVolume(0.3);
+                }
+                const style = getComputedStyle(document.documentElement);
+                const time1 = parseFloat(style.getPropertyValue('--anim-time-1').trim()) || 5;
+                const time2 = parseFloat(style.getPropertyValue('--anim-time-2').trim()) || 5;
+                const delay1 = parseFloat(style.getPropertyValue('--anim-delay-first').trim()) || 1;
+                const totalIntroDuration = (delay1 + time1 + 0.5 + time2) * 1000;
+                setTimeout(() => {
+                    if (envelopeScreen && !contentRevealed) envelopeScreen.classList.add('active');
+                }, totalIntroDuration + 300);
             });
         }
 
-        // ============ P5.JS INSTANCE MODE ============
-        const s = (p) => {
-            let demo1Shader, img, fft, audio, toggleBtn
-            let playBtnElement
-
-            p.preload = () => {
-                // GANTI NAMA FILE MUSIK DI SINI!
-                // Contoh: 'audio/lagu.mp3' atau 'lagu.mp3'
-                audio = p.loadSound('audio/lagu.mp3',
-                    () => {
-                        console.log("✅ Musik berhasil dimuat!");
-                        globalAudio = audio; // SIMPAN KE GLOBAL
-                    },
-                    (err) => console.log("❌ Gagal load musik:", err)
-                )
-                
-                // Buat shader sederhana tanpa file eksternal
-                const vertShader = `
-                    attribute vec3 aPosition;
-                    attribute vec2 aTexCoord;
-                    varying vec2 vTexCoord;
-                    void main() {
-                        vTexCoord = aTexCoord;
-                        vec4 positionVec4 = vec4(aPosition, 1.0);
-                        positionVec4.xy = positionVec4.xy * 2.0;
-                        gl_Position = positionVec4;
-                    }
-                `
-                
-                const fragShader = `
-                    uniform vec2 u_resolution;
-                    uniform float u_time;
-                    uniform float u_bass;
-                    uniform float u_tremble;
-                    uniform float u_mid;
-                    uniform sampler2D u_texture;
-                    varying vec2 vTexCoord;
-                    
-                    void main() {
-                        vec2 uv = vTexCoord;
-                        float pulse = sin(u_time * 1.5) * 0.1 + 0.9;
-                        float waveX = sin(uv.y * 20.0 + u_time) * 0.05 * u_bass;
-                        float waveY = cos(uv.x * 15.0 + u_time * 1.2) * 0.03 * u_mid;
-                        uv.x += waveX;
-                        uv.y += waveY;
-                        
-                        vec4 color = texture2D(u_texture, uv);
-                        color.rgb += vec3(u_bass * 0.15, u_mid * 0.1, u_tremble * 0.05);
-                        color.rgb *= (0.7 + pulse * 0.5);
-                        
-                        gl_FragColor = color;
-                    }
-                `
-                
-                demo1Shader = p.createShader(vertShader, fragShader)
-                
-                // Buat gambar gradien cantik
-                let graphics = p.createGraphics(512, 512)
-                graphics.background(10, 15, 26)
-                
-                for (let i = 0; i < 200; i++) {
-                    graphics.stroke(108 + i % 50, 145 + i % 40, 194 - i % 30, 100)
-                    graphics.noFill()
-                    graphics.ellipse(256, 256, 300 - i, 300 - i)
-                }
-                
-                graphics.fill(108, 145, 194, 150)
-                graphics.noStroke()
-                graphics.textSize(180)
-                graphics.textAlign(p.CENTER, p.CENTER)
-                graphics.text('❤️', 256, 280)
-                graphics.textSize(40)
-                graphics.fill(255, 200, 200, 100)
-                graphics.text('🤍', 256, 220)
-                
-                img = graphics.get()
-            }
-
-            p.setup = () => {
-                playBtnElement = document.querySelector('#play-btn')
-                if (playBtnElement) {
-                    playBtnElement.addEventListener('click', () => {
-                        document.body.classList.add('start-anim')
-                        if (audio && !audio.isPlaying()) {
-                            audio.loop()
-                            audio.setVolume(0.3)
-                            console.log("🎵 Musik diputar!")
-                            globalAudio = audio;
-                        }
-                    })
-                }
-
-                p.pixelDensity(1)
-                p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL)
-
-                toggleBtn = document.querySelector('#toggle-btn')
-                if (toggleBtn) {
-                    toggleBtn.addEventListener('click', () => {
-                        toggleBtn.classList.toggle('toggle--on')
-                        p.toggleAudio()
-                    })
-                }
-
-                fft = new p5.FFT()
-                p.shader(demo1Shader)
-
-                demo1Shader.setUniform('u_resolution', [p.windowWidth, p.windowHeight])
-                demo1Shader.setUniform('u_texture', img)
-                demo1Shader.setUniform('u_tResolution', [img.width, img.height])
-            }
-
-            p.draw = () => {
-                let bass = 0, treble = 0, mid = 0
-                
-                if (fft && audio && audio.isPlaying()) {
-                    fft.analyze()
-                    bass = fft.getEnergy("bass") / 255
-                    treble = fft.getEnergy("treble") / 255
-                    mid = fft.getEnergy("mid") / 255
-                }
-
-                const mapBass = p.map(bass, 0, 1, 0.2, 1.2)
-                const mapTreble = p.map(treble, 0, 1, 0, 0.3)
-                const mapMid = p.map(mid, 0, 1, 0, 0.5)
-
-                demo1Shader.setUniform('u_time', p.frameCount / 30)
-                demo1Shader.setUniform('u_bass', mapBass)
-                demo1Shader.setUniform('u_tremble', mapTreble)
-                demo1Shader.setUniform('u_mid', mapMid)
-
-                p.rect(0, 0, p.width, p.height)
-            }
-
-            p.windowResized = () => {
-                p.resizeCanvas(p.windowWidth, p.windowHeight)
-                demo1Shader.setUniform('u_resolution', [p.windowWidth, p.windowHeight])
-            }
-
-            p.toggleAudio = () => {
-                if (audio && audio.isPlaying()) {
-                    audio.pause()
-                    console.log("🔇 Musik dipause")
-                } else if (audio && !audio.isPlaying()) {
-                    audio.loop()
-                    audio.setVolume(0.3)
-                    console.log("🎵 Musik dilanjutkan")
-                }
-            }
+        function openEnvelope() {
+            if (envelopeOpened) return;
+            envelopeOpened = true;
+            envelopeContainer.classList.add('open');
         }
 
-        new p5(s)
-        
-        // Hilangkan loading screen
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var loading = document.getElementById('p5_loading');
-                if (loading) {
-                    loading.style.opacity = '0';
-                    setTimeout(function() { loading.style.display = 'none'; }, 500);
+        const envelopeDiv = document.getElementById('envelope');
+        if (envelopeDiv) envelopeDiv.addEventListener('click', (e) => { e.stopPropagation(); if (!envelopeOpened) openEnvelope(); });
+
+        if (revealContentBtn) {
+            revealContentBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!envelopeOpened) openEnvelope();
+                stepsContainer = document.getElementById('stepContent');
+                nextBtn = document.getElementById('nextStepBtn');
+                progressSpan = document.getElementById('progressInfo');
+                currentStep = 0;
+                showStep(0);
+                if (nextBtn) {
+                    const newNextBtn = nextBtn.cloneNode(true);
+                    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+                    nextBtn = newNextBtn;
+                    nextBtn.addEventListener('click', nextStep);
                 }
-            }, 500);
-        });
+                setTimeout(() => {
+                    envelopeScreen.classList.remove('active');
+                    mainContentDiv.classList.add('visible');
+                    contentRevealed = true;
+                }, 300);
+                if (globalAudio && !globalAudio.isPlaying()) { globalAudio.loop(); globalAudio.setVolume(0.3); }
+            });
+        }
+
+        const s = (p) => {
+            let shaderProg, bgTex, fft, audioTrack;
+            p.preload = () => {
+                audioTrack = p.loadSound('audio/lagu.mp3', () => { globalAudio = audioTrack; }, (err) => console.log("Musik tidak ditemukan"));
+                const vert = `attribute vec3 aPosition;attribute vec2 aTexCoord;varying vec2 vTexCoord;void main(){vTexCoord=aTexCoord;vec4 pos=vec4(aPosition,1.0);pos.xy=pos.xy*2.0;gl_Position=pos;}`;
+                const frag = `uniform sampler2D u_texture;uniform float u_time;uniform float u_bass;varying vec2 vTexCoord;void main(){vec2 uv=vTexCoord;float wave=sin(uv.y*15.0+u_time*2.0)*0.02*u_bass;uv.x+=wave;vec4 color=texture2D(u_texture,uv);color.rgb+=vec3(u_bass*0.08);gl_FragColor=color;}`;
+                shaderProg = p.createShader(vert, frag);
+                let pg = p.createGraphics(512, 512);
+                pg.background(10, 15, 26);
+                for (let i = 0; i < 150; i++) { pg.stroke(108 + i % 50, 145 + i % 40, 194 - i % 30, 60); pg.noFill(); pg.ellipse(256, 256, 280 - i, 280 - i); }
+                pg.fill(108, 145, 194, 80); pg.textSize(140); pg.textAlign(p.CENTER, p.CENTER); pg.text('❤️', 256, 280);
+                bgTex = pg.get();
+            };
+            p.setup = () => { p.pixelDensity(1); p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL); fft = new p5.FFT(); p.shader(shaderProg); shaderProg.setUniform('u_texture', bgTex); };
+            p.draw = () => { let bass = 0; if (audioTrack && audioTrack.isPlaying()) { fft.analyze(); bass = p.constrain(fft.getEnergy("bass") / 220, 0, 0.7); } else bass = p.sin(p.frameCount * 0.02) * 0.05 + 0.1; shaderProg.setUniform('u_time', p.millis() / 1000); shaderProg.setUniform('u_bass', bass); p.rect(0, 0, p.width, p.height); };
+            p.windowResized = () => { p.resizeCanvas(p.windowWidth, p.windowHeight); };
+        };
+        new p5(s);
+
+        window.addEventListener('load', () => { setTimeout(() => { let ld = document.getElementById('p5_loading'); if (ld) { ld.style.opacity = '0'; setTimeout(() => ld.style.display = 'none', 500); } }, 500); });
     </script>
 </body>
 
